@@ -56,7 +56,6 @@ class FilmController extends AbstractController
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER');
         $data = json_decode($request->getContent(), true);
 
         if (!$data) {
@@ -68,5 +67,12 @@ class FilmController extends AbstractController
         return $this->json($post, Response::HTTP_CREATED, [], [
             'groups' => ['post:read'],
         ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(int $id): JsonResponse
+    {
+        $post = $this->filmService->deleteFilm($id);
+        return $this->json($post, Response::HTTP_OK, [], []);
     }
 }

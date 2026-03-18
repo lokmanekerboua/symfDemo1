@@ -49,4 +49,15 @@ class FilmService
 
         return $film;
     }
+
+    public function deleteFilm(int $id): Film
+    {
+        $post = $this->filmRepository->find($id);
+        if (!$post) {
+            throw new NotFoundHttpException("Post #$id introuvable");
+        }
+        $this->em->remove($post);
+        $this->em->flush();
+        return $post;
+    }
 }
